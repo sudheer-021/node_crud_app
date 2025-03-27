@@ -11,11 +11,6 @@ const userValidationRules = [
     body('email').isEmail().withMessage('Invalid email adress'),
 ]
 
-const updateUserValidationRules = [
-    body('name').optional().notEmpty().withMessage('Name is required if provided'),
-    body('email').optional().isEmail().withMessage('Invalid email address if provided'),
-]
-
 // Authentication routes
 router.post('/register', authController.register);
 router.post('/login', authController.login);
@@ -24,7 +19,7 @@ router.post('/login', authController.login);
 router.get('/user', userController.getAllUsers);
 router.get('/users', authMiddleware, userController.getAllUsers);
 router.post('/users', authMiddleware, userValidationRules, userController.createUser);
-router.put('/users/:id', authMiddleware, updateUserValidationRules, userController.updateUser);
+router.put('/users/:id', authMiddleware, userValidationRules, userController.updateUser);
 router.delete('/users/:id', authMiddleware, userController.deleteUser);
 
 module.exports = router;
